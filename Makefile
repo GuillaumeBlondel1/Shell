@@ -5,7 +5,8 @@
 ## Makefile
 ##
 
-SRC	:=	src/main.c	\
+SRC	:=	src/main.c													\
+		prompt/display_prompt.c										\
 
 OBJ	:=	${SRC:.c=.o}
 
