@@ -12,12 +12,12 @@
     #define DEL 2
     #define SUPP 3
 
-    #define MOVE_CURSOR_LEFT "\033[1D"
-    #define MOVE_CURSOR_RIGHT "\033[1C"
+    #define MOVE_CURSOR_LEFT "\033[D\7"
+    #define MOVE_CURSOR_RIGHT "\033[C\7"
     #define ERASE_CHAR "\b \b"
 
-    #define KEY_LEFT 68
-    #define KEY_RIGHT 67
+    #define KEY_LEFT 'D'
+    #define KEY_RIGHT 'C'
 
 typedef struct temp_buffer_s {
     char *raw_buffer;
@@ -31,8 +31,13 @@ typedef struct cursor_s {
 
 enum char_type {
     SIMPLE_CHAR,
-    ARROW_CHAR
+    ARROW_CHAR,
+    DEL_CHAR,
+    SUPP_CHAR,
+    CTRL_CHAR
 };
+
+static const char arrow_keys[] = "ABCD";
 
 typedef struct reading_char_type_s {
     enum char_type type;

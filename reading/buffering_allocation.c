@@ -63,7 +63,8 @@ static void supp_char(temp_buffer_t *buffer, cursor_t *cursor)
     char *temp_buffer = NULL;
     int j = 0;
 
-    if (buffer->size_raw_buffer == 0) {
+    if (buffer->size_raw_buffer == 0 ||
+        cursor->back_cursor == buffer->size_raw_buffer) {
         return;
     }
     buffer->size_raw_buffer--;

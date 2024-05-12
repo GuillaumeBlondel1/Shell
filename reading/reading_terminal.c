@@ -23,8 +23,8 @@ static char *reading_loop(void)
             return buffer.raw_buffer;
         }
         line_editing(&buffer, &cursor, char_type);
-        //printf("%d\n", char_type.c);
     }
+    return NULL;
 }
 
 char *reading_terminal(void)

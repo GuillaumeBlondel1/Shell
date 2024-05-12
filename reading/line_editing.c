@@ -38,6 +38,7 @@ static void display_input(temp_buffer_t *buffer, cursor_t *cursor)
     }
     for (int i = buffer->size_raw_buffer; i > cursor->back_cursor; i--) {
         printf(MOVE_CURSOR_LEFT);
+        fflush(stdout);
     }
 }
 
@@ -45,26 +46,29 @@ static void clear_input(temp_buffer_t *buffer, cursor_t *cursor)
 {
     for (int i = cursor->back_cursor; i < buffer->size_raw_buffer; i++) {
         printf(MOVE_CURSOR_RIGHT);
+        fflush(stdout);
     }
     for (int i = buffer->size_raw_buffer; i > 0; i--) {
         printf(ERASE_CHAR);
+        fflush(stdout);
     }
 }
 
-static void buffer_back_editing(temp_buffer_t *buffer, cursor_t *cursor, char c)
+static void buffer_back_editing(temp_buffer_t *buffer, cursor_t *cursor,
+    reading_char_type_t char_type)
 {
-    switch (c) {
-        case 27:
-            return;
-        case 127:
+    switch (char_type.type) {
+        case CTRL_CHAR:
+            break;
+        case DEL_CHAR:
             buffering_allocation(buffer, 0, cursor, DEL);
-            return;
-        case 51:
+            break;
+        case SUPP_CHAR:
             buffering_allocation(buffer, 0, cursor, SUPP);
-            return;
+            break;
         default:
-            buffering_allocation(buffer, c, cursor, APPEND);
-            return;
+            buffering_allocation(buffer, char_type.c, cursor, APPEND);
+            break;
     }
 }
 
@@ -75,7 +79,7 @@ void line_editing(temp_buffer_t *buffer, cursor_t *cursor,
     if (char_type.type == ARROW_CHAR) {
         cursor_shifting(buffer, cursor, char_type.c);
     } else {
-        buffer_back_editing(buffer, cursor, char_type.c);
+        buffer_back_editing(buffer, cursor, char_type);
     }
     display_input(buffer, cursor);
 }
