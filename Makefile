@@ -7,22 +7,26 @@
 
 SRC	:=	src/main.c													\
 		prompt/display_prompt.c										\
+		reading/reading_terminal.c									\
+		reading/set_termios.c										\
+		reading/get_input.c											\
+		reading/buffering_allocation.c								\
 
 OBJ	:=	${SRC:.c=.o}
 
-BINARY_NAME	:=	shell
+CFLAGS	:=	-Wall -Wextra -g3
 
-CFLAGS	:=	-Wall -Wextra
+BINARY	:=	shell
 
-all:	${BINARY_NAME}
+all:	compile
 
-${BINARY_NAME}:	${OBJ}
-	$(CC) -o ${BINARY_NAME} ${OBJ} ${CFLAGS}
+compile: $(OBJ)
+	$(CC) -o $(BINARY) $(CFLAGS) $(OBJ)
 
 clean:
-	rm -f -r ${OBJ}
+	rm -f -r $(OBJ)
 
 fclean:	clean
-	rm -f ${BINARY_NAME}
+	rm -f $(BINARY)
 
-.PHONY: all re clean fclean
+re:	fclean	compile
