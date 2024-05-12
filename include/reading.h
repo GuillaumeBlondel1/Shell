@@ -12,6 +12,13 @@
     #define DEL 2
     #define SUPP 3
 
+    #define MOVE_CURSOR_LEFT "\033[1D"
+    #define MOVE_CURSOR_RIGHT "\033[1C"
+    #define ERASE_CHAR "\b \b"
+
+    #define KEY_LEFT 68
+    #define KEY_RIGHT 67
+
 typedef struct temp_buffer_s {
     char *raw_buffer;
     int size_raw_buffer;
@@ -39,6 +46,9 @@ void unset_terminal_mode(void);
 
 reading_char_type_t get_input(void);
 
-void buffering_allocation(temp_buffer_t *current_buffer, char c, cursor_t *cursor, int macro);
+void buffering_allocation(temp_buffer_t *buffer, char c, cursor_t *cursor, int macro);
+
+void line_editing(temp_buffer_t *buffer, cursor_t *cursor,
+    reading_char_type_t char_type);
 
 #endif

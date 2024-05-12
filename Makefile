@@ -11,6 +11,7 @@ SRC	:=	src/main.c													\
 		reading/set_termios.c										\
 		reading/get_input.c											\
 		reading/buffering_allocation.c								\
+		reading/line_editing.c										\
 
 OBJ	:=	${SRC:.c=.o}
 

@@ -7,27 +7,32 @@
 
 #include "../include/reading.h"
 
-#include <stdio.h>
+#include <string.h>
 #include <stdbool.h>
 
-static void reading_loop(temp_buffer_t *current_buffer)
+static char *reading_loop(void)
 {
+    temp_buffer_t buffer = {0};
     cursor_t cursor = {0};
     reading_char_type_t char_type = {0};
 
     cursor.front_cursor = 1;
     while (true) {
         char_type = get_input();
-        buffering_allocation(current_buffer, char_type.c, &cursor, APPEND);
+        if (char_type.c == '\n') {
+            return buffer.raw_buffer;
+        }
+        line_editing(&buffer, &cursor, char_type);
+        //printf("%d\n", char_type.c);
     }
 }
 
 char *reading_terminal(void)
 {
-    temp_buffer_t current_buffer = {0};
+    char *input = NULL;
 
     set_terminal_mode();
-    reading_loop(&current_buffer);
+    input = reading_loop();
     unset_terminal_mode();
     return NULL;
 }
