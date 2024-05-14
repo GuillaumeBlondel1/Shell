@@ -24,6 +24,7 @@ static char *reading_loop(void)
         if (char_type.c == '\n') {
             return buffer.raw_buffer;
         }
+        //printf("%d\n", char_type.c);
         line_editing(&buffer, &cursor, char_type);
     }
     return NULL;

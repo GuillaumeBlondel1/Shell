@@ -40,6 +40,15 @@ static void buffer_back_editing(temp_buffer_t *buffer, cursor_t *cursor,
         case START_HEAD:
             cursor_shifting_start_line(cursor);
             break;
+        case ENQUERY:
+            cursor_shifting_end_line(buffer, cursor);
+            break;
+        case FORWARD:
+            cursor_shifting_forward(buffer, cursor);
+            break;
+        case BACKWARD:
+            cursor_shifting_backward(cursor);
+            break;
         case CTRL_CHAR:
             break;
         case DEL_CHAR:

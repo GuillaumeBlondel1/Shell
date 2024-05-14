@@ -11,13 +11,22 @@
 
 static int input_is_editing(reading_char_type_t *char_type)
 {
-    if (char_type->c == 1) {
-        char_type->type = START_HEAD;
-        return 1;
-    }
-    if (char_type->c == 4) {
-        char_type->type = END_TRANSMISSION;
-        return 1;
+    switch (char_type->c) {
+        case 1:
+            char_type->type = START_HEAD;
+            return 1;
+        case 4:
+            char_type->type = END_TRANSMISSION;
+            return 1;
+        case 5:
+            char_type->type = ENQUERY;
+            return 1;
+        case 2:
+            char_type->type = BACKWARD;
+            return 1;
+        case 6:
+            char_type->type = FORWARD;
+            return 1;
     }
     return 0;
 }
