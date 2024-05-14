@@ -10,6 +10,8 @@
 #include <string.h>
 #include <stdbool.h>
 
+#include <stdio.h>
+
 static char *reading_loop(void)
 {
     temp_buffer_t buffer = {0};

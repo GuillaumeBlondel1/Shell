@@ -34,7 +34,9 @@ enum char_type {
     ARROW_CHAR,
     DEL_CHAR,
     SUPP_CHAR,
-    CTRL_CHAR
+    CTRL_CHAR,
+    START_HEAD,
+    END_TRANSMISSION
 };
 
 static const char arrow_keys[] = "ABCD";
@@ -55,5 +57,11 @@ void buffering_allocation(temp_buffer_t *buffer, char c, cursor_t *cursor, int m
 
 void line_editing(temp_buffer_t *buffer, cursor_t *cursor,
     reading_char_type_t char_type);
+
+void cursor_shifting(temp_buffer_t *buffer,
+    cursor_t *cursor, char arrow_key);
+void cursor_shifting_start_line(cursor_t *cursor);
+
+void editing_end_transmission(temp_buffer_t *buffer, cursor_t *cursor);
 
 #endif

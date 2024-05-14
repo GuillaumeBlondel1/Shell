@@ -12,6 +12,8 @@ SRC	:=	src/main.c													\
 		reading/get_input.c											\
 		reading/buffering_allocation.c								\
 		reading/line_editing.c										\
+		reading/cursor_editing.c									\
+		reading/buffer_editing.c									\
 
 OBJ	:=	${SRC:.c=.o}
 

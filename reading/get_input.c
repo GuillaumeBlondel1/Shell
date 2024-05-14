@@ -9,6 +9,19 @@
 
 #include <unistd.h>
 
+static int input_is_editing(reading_char_type_t *char_type)
+{
+    if (char_type->c == 1) {
+        char_type->type = START_HEAD;
+        return 1;
+    }
+    if (char_type->c == 4) {
+        char_type->type = END_TRANSMISSION;
+        return 1;
+    }
+    return 0;
+}
+
 static int input_is_supp(reading_char_type_t *char_type, char c_next)
 {
     char c_tilde = 0;
@@ -74,6 +87,9 @@ reading_char_type_t get_input(void)
     reading_char_type_t char_type = {0};
 
     read(0, &char_type.c, 1);
+    if (input_is_editing(&char_type)) {
+        return char_type;
+    }
     if (input_ctrl_reference(&char_type)) {
         return char_type;
     }

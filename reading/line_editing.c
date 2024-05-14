@@ -9,27 +9,6 @@
 
 #include <stdio.h>
 
-static void cursor_shifting(temp_buffer_t *buffer,
-    cursor_t *cursor, char arrow_key)
-{
-    switch (arrow_key) {
-        case KEY_LEFT:
-            if (cursor->front_cursor != 1) {
-                cursor->front_cursor--;
-                cursor->back_cursor--;
-            }
-            return;
-        case KEY_RIGHT:
-            if (cursor->back_cursor != buffer->size_raw_buffer) {
-                cursor->front_cursor++;
-                cursor->back_cursor++;
-            }
-            return;
-        default:
-            return;
-    }
-}
-
 static void display_input(temp_buffer_t *buffer, cursor_t *cursor)
 {
     if (buffer->raw_buffer != NULL) {
@@ -58,6 +37,9 @@ static void buffer_back_editing(temp_buffer_t *buffer, cursor_t *cursor,
     reading_char_type_t char_type)
 {
     switch (char_type.type) {
+        case START_HEAD:
+            cursor_shifting_start_line(cursor);
+            break;
         case CTRL_CHAR:
             break;
         case DEL_CHAR:
@@ -65,6 +47,9 @@ static void buffer_back_editing(temp_buffer_t *buffer, cursor_t *cursor,
             break;
         case SUPP_CHAR:
             buffering_allocation(buffer, 0, cursor, SUPP);
+            break;
+        case END_TRANSMISSION:
+            editing_end_transmission(buffer, cursor);
             break;
         default:
             buffering_allocation(buffer, char_type.c, cursor, APPEND);
