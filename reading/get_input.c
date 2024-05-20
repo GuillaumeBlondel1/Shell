@@ -42,6 +42,9 @@ static int input_is_editing(reading_char_type_t *char_type)
         case 25:
             char_type->type = COPY;
             return 1;
+        case 13:
+            char_type->type = BACK_TO_LINE;
+            return 1;
     }
     return 0;
 }

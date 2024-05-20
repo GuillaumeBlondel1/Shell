@@ -43,7 +43,8 @@ enum char_type {
     BACKWARD,
     CUT_BEFORE,
     CUT_AFTER,
-    COPY
+    COPY,
+    BACK_TO_LINE
 };
 
 static const char arrow_keys[] = "ABCD";
