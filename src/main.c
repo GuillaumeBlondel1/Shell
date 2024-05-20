@@ -8,7 +8,6 @@
 #include "../include/prompt.h"
 #include "../include/reading.h"
 
-#include <string.h>
 #include <stdbool.h>
 
 int main(int, char **, char **env)

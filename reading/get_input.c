@@ -27,6 +27,21 @@ static int input_is_editing(reading_char_type_t *char_type)
         case 6:
             char_type->type = FORWARD;
             return 1;
+        case 8:
+            char_type->type = DEL_CHAR;
+            return 1;
+        case 127:
+            char_type->type = DEL_CHAR;
+            return 1;
+        case 21:
+            char_type->type = CUT_BEFORE;
+            return 1;
+        case 11:
+            char_type->type = CUT_AFTER;
+            return 1;
+        case 25:
+            char_type->type = COPY;
+            return 1;
     }
     return 0;
 }
@@ -81,16 +96,6 @@ static int input_ctrl_reference(reading_char_type_t *char_type)
     return 0;
 }
 
-static int input_is_del(reading_char_type_t *char_type)
-{
-    if (char_type->c == 127) {
-        char_type->type = DEL_CHAR;
-        char_type->c = 0;
-        return 1;
-    }
-    return 0;
-}
-
 reading_char_type_t get_input(void)
 {
     reading_char_type_t char_type = {0};
@@ -100,9 +105,6 @@ reading_char_type_t get_input(void)
         return char_type;
     }
     if (input_ctrl_reference(&char_type)) {
-        return char_type;
-    }
-    if (input_is_del(&char_type)) {
         return char_type;
     }
     return char_type;

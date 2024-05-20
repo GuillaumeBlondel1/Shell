@@ -22,6 +22,7 @@
 typedef struct temp_buffer_s {
     char *raw_buffer;
     int size_raw_buffer;
+    char *save_buffer;
 } temp_buffer_t;
 
 typedef struct cursor_s {
@@ -39,8 +40,10 @@ enum char_type {
     ENQUERY,
     END_TRANSMISSION,
     FORWARD,
-    BACKWARD
-
+    BACKWARD,
+    CUT_BEFORE,
+    CUT_AFTER,
+    COPY
 };
 
 static const char arrow_keys[] = "ABCD";
@@ -70,5 +73,16 @@ void cursor_shifting_start_line(cursor_t *cursor);
 void cursor_shifting_end_line(temp_buffer_t *buffer, cursor_t *cursor);
 
 void editing_end_transmission(temp_buffer_t *buffer, cursor_t *cursor);
+void editing_cut_before_cursor(temp_buffer_t *buffer, cursor_t *cursor);
+void editing_cut_after_cursor(temp_buffer_t *buffer, cursor_t *cursor);
+
+int length_save_buffer(temp_buffer_t *buffer,
+    cursor_t *cursor, int setting);
+int length_temp_buffer(temp_buffer_t *buffer,
+    cursor_t *cursor, int setting);
+void fill_save_buffer(temp_buffer_t *buffer, cursor_t *cursor, int setting);
+void fill_temp_buffer(char *temp_buffer, temp_buffer_t *buffer,
+    cursor_t *cursor, int setting);
+void editing_copy_buffer(temp_buffer_t *buffer, cursor_t *cursor);
 
 #endif

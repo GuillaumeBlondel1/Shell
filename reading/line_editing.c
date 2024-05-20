@@ -60,6 +60,15 @@ static void buffer_back_editing(temp_buffer_t *buffer, cursor_t *cursor,
         case END_TRANSMISSION:
             editing_end_transmission(buffer, cursor);
             break;
+        case CUT_BEFORE:
+            editing_cut_before_cursor(buffer, cursor);
+            break;
+        case CUT_AFTER:
+            editing_cut_after_cursor(buffer, cursor);
+            break;
+        case COPY:
+            editing_copy_buffer(buffer, cursor);
+            break;
         default:
             buffering_allocation(buffer, char_type.c, cursor, APPEND);
             break;
